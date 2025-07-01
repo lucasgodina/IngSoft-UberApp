@@ -5,7 +5,7 @@ Simularemos una arquitectura en MVC para hacer una aplicación símil a Uber.
 
 ## Tecnologias a utilizar:
 
--   A definir
+-   Python
 
 ## Integrantes:
 
