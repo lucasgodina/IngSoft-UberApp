@@ -8,7 +8,8 @@ class Passenger(User):
 
     def calificar(self):
         # Lógica para calificar al pasajero
-        print("Calificando pasajero...")
+        califiPasajero =input("Calificar al pasajero: ")
+        print(f"Calificación recibida: {califiPasajero}")
 
     def agregar_direccion(self, direccion):
         self.direcciones.append(direccion)

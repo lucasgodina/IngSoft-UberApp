@@ -25,7 +25,8 @@ class Driver(User):
 
     def calificar(self):
         # hereda del metodo abstracto
-        print("Calificando chofer...")
+        calicar = input("Calificar al chofer: ")
+        print(f"Calificacion recibida: {calicar}")
 
     def definir_zona_trabajo(self, zona: str):
         # defino la zona donde se encuentra trabajando
