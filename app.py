@@ -31,17 +31,10 @@ def main():
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
     else:
         view.show_message(f"Es una lastima que no puedas que no puedas llva a {passenger.name}  ¡Hasta luego! 👋")
-
     # 4. Crear viaje, asignar chofer y completarlo
     ride = controller.request_ride(passenger, origin, destination)
     controller.assign_driver(ride, driver)
-
-    # 5. Calificar pasajero y chofer
-    view.show_message("Calificar al conductor y al pasajero:")
-    passenger.calificar()
-    driver.calificar()
-
-   
+         
     input("Presioná enter para finalizar el viaje...")
     controller.complete_ride(ride)
 
