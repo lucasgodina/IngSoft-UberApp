@@ -36,15 +36,15 @@ def main():
     ride = controller.request_ride(passenger, origin, destination)
     controller.assign_driver(ride, driver)
 
-    input("Presioná enter para finalizar el viaje...")
-    controller.complete_ride(ride)
-
     # 5. Calificar pasajero y chofer
     view.show_message("Calificar al conductor y al pasajero:")
     passenger.calificar()
     driver.calificar()
 
-    # 6. Definir zona de trabajo del chofer
+   
+    input("Presioná enter para finalizar el viaje...")
+    controller.complete_ride(ride)
+
 
 
     
