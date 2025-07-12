@@ -21,7 +21,7 @@ class RideController:
             self.view.show_message(f"{driver.name} no está disponible.")
 
     def complete_ride(self, ride):
-        ride.status = "CompletadO"
+        ride.status = "Completado"
         ride.driver.available = True
         self.view.show_message(f"El viaje con {ride.passenger.name} se completo")
 

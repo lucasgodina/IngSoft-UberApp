@@ -109,7 +109,6 @@ def main():
     
     if approved == 's':
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
-        
         # 6. Crear, asignar y completar el viaje
         ride = controller.request_ride(passenger, origin, destination)
         controller.assign_driver(ride, driver)
@@ -118,7 +117,7 @@ def main():
         controller.complete_ride(ride)
         view.show_message("✅ ¡Viaje completado exitosamente!")
     else:
-        view.show_message(f"Es una lástima que no puedas llevar a {passenger.name}. ¡Hasta luego! 👋")
+        view.show_message(f"Es una lastima que no puedas que no puedas llva a {passenger.name}  ¡Hasta luego! 👋")
 
 if __name__ == "__main__":
     main()
