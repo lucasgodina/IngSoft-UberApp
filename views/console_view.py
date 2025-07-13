@@ -22,7 +22,6 @@ class ConsoleView:
         license_plate = input("Patente: ")
         return name, dni, email, phone, license_plate
     
-
     def get_passenger_name(self):
         return input("Nombre del pasajero: ")
     
@@ -49,3 +48,25 @@ class ConsoleView:
     
     def get_driver_license_plate(self):
         return input("Patente: ")
+    
+    def get_valid_driver_rating(self, driver_name):
+        while True:
+            try:
+                rating = int(input(f"¿Con cuántas estrellas calificás al chofer {driver_name}? (1-5): "))
+                if 1 <= rating <= 5:
+                    return rating
+                else:
+                    self.show_message("Por favor, ingresá un número entre 1 y 5.")
+            except ValueError:
+                self.show_message("Entrada inválida. Ingresá un número.")
+
+    def get_valid_passenger_rating(self, passenger_name):
+        while True:
+            try:
+                rating = int(input(f"¿Con cuántas estrellas calificás al pasajero {passenger_name}? (1-5): "))
+                if 1 <= rating <= 5:
+                    return rating
+                else:
+                    self.show_message("Por favor, ingresá un número entre 1 y 5.")
+            except ValueError:
+                self.show_message("Entrada inválida. Ingresá un número.")
