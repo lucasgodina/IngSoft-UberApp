@@ -4,16 +4,16 @@ from models.user import User
 class Passenger(User):
     def __init__(self, name, dni, email, number_phone):
         super().__init__(name, dni, email, number_phone)
-        self.direcciones = []
+        self.addresses = []
 
-    def calificar(self):
+    def rate(self):
         # Lógica para calificar al pasajero
-        califiPasajero =input("Calificar al pasajero: ")
-        print(f"Calificación recibida: {califiPasajero}")
+        ratePassenger =input("Calificar al pasajero: ")
+        print(f"Calificación recibida: {ratePassenger}")
 
-    def agregar_direccion(self, direccion):
-        self.direcciones.append(direccion)
+    def add_address(self, address):
+        self.addresses.append(address)
 
-    def definir_direccion_casa(self, direccion):
+    def set_home_address(self, address):
         # Lógica para definir la dirección de casa
-        print(f"Dirección de casa establecida: {direccion}")
+        print(f"Dirección de casa establecida: {address}")

@@ -12,10 +12,10 @@ class RideController:
         return ride
 
     def assign_driver(self, ride, driver):
-        if not driver.esta_trabajando:  # Solo si NO está trabajando
+        if not driver.is_working:  # Solo si NO está trabajando
             ride.driver = driver
             ride.status = "En camino"
-            driver.definir_esta_trabajando(True)
+            driver.set_working_status(True)
             self.view.show_message(f"{driver.name} aceptó tu viaje.")
         else:
             self.view.show_message(f"{driver.name} no está disponible.")
@@ -24,10 +24,3 @@ class RideController:
         ride.status = "CompletadO"
         ride.driver.available = True
         self.view.show_message(f"El viaje con {ride.passenger.name} se completo")
-    
-    def calcular_viaje(self, mileage):
-        valorMileage = 1600
-        priceJourney = mileage* valorMileage
-        return priceJourney
-    
-    
