@@ -21,3 +21,16 @@ class ConsoleView:
         phone = input("Teléfono: ")
         patente = input("Patente: ")
         return name, dni, email, phone, patente
+    
+    def pedir_kilometros(self):
+        while True:
+            try:
+                millage = float(input("Ingrese la cantidad de kilómetros recorridos: "))
+                if millage > 0:
+                    return millage
+                else:
+                    print("Por favor, ingrese un valor positivo.")
+            except ValueError:
+                print("Por favor, ingrese un número válido.")
+        
+           

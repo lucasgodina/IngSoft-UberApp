@@ -26,8 +26,8 @@ def main():
     view.show_message(f"Hola {passenger.name}, ¿desde dónde querés viajar?")
     origin, destination = view.get_ride_data()
 
-    aproved = input("¿Querés realizar el viaje? (s/n): ")
-    if aproved.lower() == 's':
+    aproved = input(f"¿Querés realizar el viaje a {destination}? (s/n): ")
+    if aproved.lower() == 's': 
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
     else:
         view.show_message(f"Es una lastima que no puedas que no puedas llva a {passenger.name}  ¡Hasta luego! 👋")
@@ -35,6 +35,10 @@ def main():
     ride = controller.request_ride(passenger, origin, destination)
     controller.assign_driver(ride, driver)
          
+    count_millage = view.pedir_kilometros()
+    total_millage = controller.calcular_viaje(count_millage)
+    view.show_message(f"El costo del viaje es: {total_millage} pesos")
+    
     input("Presioná enter para finalizar el viaje...")
     controller.complete_ride(ride)
 

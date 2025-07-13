@@ -4,7 +4,7 @@ class RideController:
     def __init__(self, view):
         self.view = view
         self.rides = []
-
+        self.mileage = 0
     def request_ride(self, passenger, origin, destination):
         ride = Ride(passenger, origin, destination)
         self.rides.append(ride)
@@ -24,3 +24,10 @@ class RideController:
         ride.status = "CompletadO"
         ride.driver.available = True
         self.view.show_message(f"El viaje con {ride.passenger.name} se completo")
+    
+    def calcular_viaje(self, mileage):
+        valorMileage = 1600
+        priceJourney = mileage* valorMileage
+        return priceJourney
+    
+    
