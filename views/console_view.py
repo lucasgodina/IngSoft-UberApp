@@ -19,5 +19,33 @@ class ConsoleView:
         dni = input("DNI: ")
         email = input("Email: ")
         phone = input("Teléfono: ")
-        patente = input("Patente: ")
-        return name, dni, email, phone, patente
+        license_plate = input("Patente: ")
+        return name, dni, email, phone, license_plate
+    
+
+    def get_passenger_name(self):
+        return input("Nombre del pasajero: ")
+    
+    def get_passenger_dni(self):
+        return input("DNI: ")
+    
+    def get_passenger_email(self):
+        return input("Email: ")
+    
+    def get_passenger_phone(self):
+        return input("Teléfono: ")
+    
+    def get_driver_name(self):
+        return input("Nombre del chofer: ")
+    
+    def get_driver_dni(self):
+        return input("DNI: ")
+    
+    def get_driver_email(self):
+        return input("Email: ")
+    
+    def get_driver_phone(self):
+        return input("Teléfono: ")
+    
+    def get_driver_license_plate(self):
+        return input("Patente: ")
