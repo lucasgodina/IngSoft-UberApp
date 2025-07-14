@@ -17,37 +17,35 @@ def main():
     
     # Pedir nombre del pasajero
     while True:
-        name = view.get_passenger_name()
-        name = name.title() 
-        if controller.is_valid_name(name):
+        passenger_name = view.get_passenger_name()
+        passenger_name = passenger_name.title() 
+        if controller.is_valid_name(passenger_name):
             break
         view.show_message("❌ El nombre no puede estar vacío.")
     
     # Pedir DNI del pasajero
     while True:
-        dni = view.get_passenger_dni()
-        if controller.is_valid_dni(dni):
+        passenger_dni = view.get_passenger_dni()
+        if controller.is_valid_dni(passenger_dni):
             break
         view.show_message("❌ El DNI debe contener solo números y tener 7 u 8 dígitos.")
     
     # Pedir email del pasajero
     while True:
-        email = view.get_passenger_email()
-        if controller.is_valid_email(email):
+        passenger_email = view.get_passenger_email()
+        if controller.is_valid_email(passenger_email):
             break
         view.show_message("❌ El email no es válido.")
     
     # Pedir teléfono del pasajero
     while True:
-        phone = view.get_passenger_phone()
-        if controller.is_valid_phone(phone):
+        passenger_phone = view.get_passenger_phone()
+        if controller.is_valid_phone(passenger_phone):
             break
         view.show_message("❌ El teléfono debe tener al menos 10 dígitos.")
     
     view.show_message("✅ Datos del pasajero válidos.")
-    passenger = Passenger(name, dni, email, phone)
-    
-
+    passenger = Passenger(passenger_name, passenger_dni, passenger_email, passenger_phone)
 
     # 2. Pedir datos del chofer
     view.show_message("------ Pantalla del Chofer ------")
@@ -55,43 +53,42 @@ def main():
     
     # Pedir nombre del chofer
     while True:
-        name = view.get_driver_name()
-        name = name.title()  
-        if controller.is_valid_name(name):
+        driver_name = view.get_driver_name()
+        driver_name = driver_name.title()  
+        if controller.is_valid_name(driver_name):
             break
         view.show_message("❌ El nombre no puede estar vacío.")
     
     # Pedir DNI del chofer
     while True:
-        dni = view.get_driver_dni()
-        if controller.is_valid_dni(dni):
+        driver_dni = view.get_driver_dni()
+        if controller.is_valid_dni(driver_dni):
             break
         view.show_message("❌ El DNI debe contener solo números y tener 7 u 8 dígitos.")
     
     # Pedir email del chofer
     while True:
-        email = view.get_driver_email()
-        if controller.is_valid_email(email):
+        driver_email = view.get_driver_email()
+        if controller.is_valid_email(driver_email):
             break
         view.show_message("❌ El email no es válido.")
     
     # Pedir teléfono del chofer
     while True:
-        phone = view.get_driver_phone()
-        if controller.is_valid_phone(phone):
+        driver_phone = view.get_driver_phone()
+        if controller.is_valid_phone(driver_phone):
             break
         view.show_message("❌ El teléfono debe tener al menos 10 dígitos.")
     
     # Pedir patente del chofer
     while True:
-
         license_plate = view.get_driver_license_plate()
         if license_plate.strip():
             break
         view.show_message("❌ La patente no puede estar vacía.")
     
     view.show_message("✅ Datos del chofer válidos.")
-    driver = Driver(name, dni, email, phone, license_plate)
+    driver = Driver(driver_name, driver_dni, driver_email, driver_phone, license_plate)
 
     # 3. Definir zona de trabajo
     while True:
@@ -114,38 +111,47 @@ def main():
     # 5. Confirmar viaje
     view.show_message("------ Pantalla del Chofer ------")
     while True:
-        approved = input("¿Querés realizar el viaje? (s/n): ").lower()
+        approved = input(f"¿Querés realizar el viaje a {destination}? (s/n): ").lower()
         if approved in ['s', 'n']:
             break
         view.show_message("❌ Por favor ingresá 's' para sí o 'n' para no.")
     
     if approved == 's':
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
-        # 4. Crear viaje, asignar chofer y completarlo
+        # Crear viaje y asignar chofer
         ride = controller.request_ride(passenger, origin, destination)
         view.show_message("------ Pantalla del Pasajero ------")
         controller.assign_driver(ride, driver)
         view.show_message(f"El viaje ha sido asignado a {driver.name} con patente {driver.license_plate}.")
+
+        # Calcular precio del viaje
+        view.show_message("Vamos a calcular el precio del viaje...")
+        cantidad_millage = view.pedir_kilometros()
+        precio_viaje = controller.calcular_viaje(cantidad_millage)
+        view.show_message(f"💰 El precio del viaje es: ${precio_viaje}")
+
+        # Finalizar viaje
         input("Presioná enter para finalizar el viaje...")
         view.show_message("------ Pantalla del Chofer ------")
         controller.complete_ride(ride)
+
         # Calificar al chofer
         view.show_message("------ Pantalla del Pasajero ------")
         driver_rating = view.get_valid_driver_rating(driver.name)
         driver.rate(driver_rating)
-        view.show_message("Gracias por calificar al chofer del viaje. ¡Hasta la próxima! 👋")
-        view.show_message("Se ha finalizado el viaje exitosamente. 🚗💨")
+        view.show_message("Gracias por calificar al chofer. ¡Hasta la próxima! 👋")
+
         # Calificar al pasajero
         view.show_message("------ Pantalla del Chofer ------")
         passenger_rating = view.get_valid_passenger_rating(passenger.name)
         passenger.rate(passenger_rating)
-        view.show_message("Gracias por calificar al pasajero del viaje. ¡Hasta la próxima! 👋")
-        view.show_message("Se ha finalizado el viaje exitosamente. 🚗💨")
+        view.show_message("Gracias por calificar al pasajero. ¡Hasta la próxima! 👋")
+    
     else:
-        # Si el chofer no puede llevar al pasajero
-        view.show_message(f"Es una lástima que no puedas llevar a {passenger.name}  ¡Hasta luego! 👋")
+        # Si el chofer no acepta el viaje
+        view.show_message(f"Es una lástima que no puedas llevar a {passenger.name}. ¡Hasta luego! 👋")
         view.show_message("------ Pantalla del Pasajero ------")
-        view.show_message("No hay vehiculos disponibles.")
-        
+        view.show_message("No hay vehículos disponibles.")
+
 if __name__ == "__main__":
     main()

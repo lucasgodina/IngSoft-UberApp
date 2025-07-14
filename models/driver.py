@@ -6,6 +6,7 @@ class Driver(User):
         self._license_plate = license_plate
         self._is_working = False
         self._work_area = None 
+        self.ratings = []
 
     @property
     def license_plate(self):
@@ -39,4 +40,5 @@ class Driver(User):
         self._work_area = area
         
     def rate(self, rating):
+        self.ratings.append(rating)
         print(f"El chofer {self.name} ha sido calificado con {rating} estrellas.")
