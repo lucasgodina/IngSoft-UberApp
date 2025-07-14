@@ -96,7 +96,7 @@ def main():
     view.show_message(f"Hola {passenger.name}, ¿desde dónde querés viajar?")
     origin, destination = view.get_ride_data()
 
-    aproved = input("¿Querés realizar el viaje? (s/n): ")
+    aproved = input(f"¿Querés realizar el viaje hasta {destination} ? (s/n): ")
     if aproved.lower() == 's':
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
     else:
@@ -104,7 +104,15 @@ def main():
     # 4. Crear viaje, asignar chofer y completarlo
     ride = controller.request_ride(passenger, origin, destination)
     controller.assign_driver(ride, driver)
-         
+    
+    print(f"El chofer {driver.name} ha sido asignado al viaje.")
+    view.show_message(f"El viaje desde {origin} hasta {destination} ha comenzado.")
+    
+    print("vamos a calcular el precio del viaje")
+    cantidad_millage = view.pedir_kilometros()
+    precio_viaje = controller.calcular_viaje(cantidad_millage)  
+    view.show_message(f"El precio del viaje es: ${precio_viaje}")
+
     input("Presioná enter para finalizar el viaje...")
     controller.complete_ride(ride)
 

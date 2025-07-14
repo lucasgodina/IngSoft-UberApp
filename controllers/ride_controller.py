@@ -5,6 +5,7 @@ class RideController:
         self.view = view
         self.rides = []
         self.mileage = 0
+
     def request_ride(self, passenger, origin, destination):
         ride = Ride(passenger, origin, destination)
         self.rides.append(ride)
@@ -21,20 +22,19 @@ class RideController:
             self.view.show_message(f"{driver.name} no está disponible.")
 
     def complete_ride(self, ride):
-        ride.status = "CompletadO"
+        ride.status = "Completado"
         ride.driver.available = True
-        self.view.show_message(f"El viaje con {ride.passenger.name} se completo")
-<<<<<<< HEAD
-    
+        self.view.show_message(f"El viaje con {ride.passenger.name} se completó")
+
+    # -------------------------------
+    # metodo que realice para saber el precio del viaje
     def calcular_viaje(self, mileage):
         valorMileage = 1600
-        priceJourney = mileage* valorMileage
+        priceJourney = mileage * valorMileage
         return priceJourney
-    
-    
-=======
 
-#Validaciones Rocio
+    # -------------------------------
+    # Validaciones que vienen de main
     def validate_passenger_data(self, name, dni, email, phone):
         if not self.is_valid_name(name):
             self.view.show_message("❌ El nombre no puede estar vacío.")
@@ -68,5 +68,4 @@ class RideController:
         return "@" in email and "." in email and len(email) >= 5
 
     def is_valid_phone(self, phone):
-        return phone.isdigit() and len(phone) >= 10  
->>>>>>> main
+        return phone.isdigit() and len(phone) >= 10
