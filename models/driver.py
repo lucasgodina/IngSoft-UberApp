@@ -1,5 +1,6 @@
 from models.user import User
 
+
 class Driver(User):
     def __init__(self, name, dni, email, number_phone, license_plate):
         super().__init__(name, dni, email, number_phone)
@@ -18,8 +19,8 @@ class Driver(User):
     def is_working(self):
         return self._is_working
 
-    #  modificar estel estado si se encuentra trabajando o no, 
-    
+    #  modificar estel estado si se encuentra trabajando o no,
+
     def set_working_status(self, status: bool):
         self._is_working = status
 
@@ -31,3 +32,22 @@ class Driver(User):
     def set_work_zone(self, zone: str):
         # defino la zona donde se encuentra trabajando
         print(f"Zona de trabajo establecida: {zone}")
+
+    def get_driver_id(self):
+        """Retorna un ID único para el conductor"""
+        return f"driver_{self.dni}"
+
+    @property
+    def driver_id(self):
+        """Propiedad para acceder al ID del conductor"""
+        return self.get_driver_id()
+
+    def update_location(self, location):
+        """Actualiza la ubicación actual del conductor"""
+        self._current_location = location
+        print(f"🚗 {self.name}: Ubicación actualizada a {location}")
+
+    @property
+    def current_location(self):
+        """Obtiene la ubicación actual del conductor"""
+        return getattr(self, "_current_location", "Ubicación no disponible")
