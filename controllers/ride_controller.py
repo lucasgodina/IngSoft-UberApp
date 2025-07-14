@@ -8,6 +8,7 @@ class RideController:
         self.view = view
         self.rides = []
         self.backend_server = BackendServer()
+        self.ride_etas = {}  # Almacena ETA inicial para cada viaje
 
     def request_ride(self, passenger, origin, destination):
         ride = Ride(passenger, origin, destination)
@@ -35,6 +36,14 @@ class RideController:
         if ride.driver:
             passenger_id = ride.passenger.get_passenger_id()
 
+            # Establecer ETA inicial para este viaje (entre 15-25 minutos)
+            initial_eta = random.randint(15, 25)
+            self.ride_etas[ride] = {
+                "initial_eta": initial_eta,
+                "current_eta": initial_eta,
+                "updates_count": 0,
+            }
+
             # Solicitar ubicación inicial del conductor
             driver_location = self.backend_server.request_driver_location(
                 ride.driver.driver_id
@@ -45,6 +54,7 @@ class RideController:
                 f"🚗 {ride.driver.name} está en camino desde {driver_location}"
             )
             self.view.show_message(f"📍 Ubicación actual: {driver_location}")
+            self.view.show_message(f"⏱️ Tiempo estimado inicial: {initial_eta} minutos")
 
             # Iniciar loop de seguimiento continuo
             self.backend_server.start_location_updates(
@@ -65,7 +75,7 @@ class RideController:
                 "Cerca de tu ubicación",
             ]
 
-            for location in locations:
+            for i, location in enumerate(locations):
                 # Actualizar ubicación del conductor
                 ride.driver.update_location(location)
 
@@ -79,15 +89,35 @@ class RideController:
                     f"📍 {ride.driver.name} ahora está en: {location}"
                 )
 
-                # Calcular ETA estimado
-                eta = self.calculate_eta(location, ride.destination)
+                # Calcular ETA estimado que se reduce progresivamente
+                eta = self.calculate_eta_progressive(ride, i)
                 self.view.show_message(f"⏱️ Tiempo estimado de llegada: {eta} minutos")
 
-    def calculate_eta(self, current_location, destination):
-        """Calcula ETA estimado (simulado)"""
-        # Simulación simple de cálculo de ETA
-        import random
+    def calculate_eta_progressive(self, ride, update_index):
+        """Calcula ETA que se reduce progresivamente con cada actualización"""
+        if ride not in self.ride_etas:
+            return 5  # Fallback si no hay datos
 
+        eta_data = self.ride_etas[ride]
+        initial_eta = eta_data["initial_eta"]
+        updates_count = eta_data["updates_count"]
+
+        # Reducir el ETA basado en el número de actualizaciones
+        # Cada actualización reduce el tiempo entre 2-5 minutos
+        reduction_per_update = random.randint(2, 5)
+        total_reduction = (updates_count + update_index + 1) * reduction_per_update
+
+        new_eta = max(1, initial_eta - total_reduction)  # Mínimo 1 minuto
+
+        # Actualizar el contador de actualizaciones
+        eta_data["updates_count"] += 1
+        eta_data["current_eta"] = new_eta
+
+        return new_eta
+
+    def calculate_eta(self, current_location, destination):
+        """Calcula ETA estimado (método legacy, mantenido por compatibilidad)"""
+        # Simulación simple de cálculo de ETA
         return random.randint(5, 15)
 
     def stop_location_tracking(self, driver):
@@ -99,6 +129,10 @@ class RideController:
         # Detener seguimiento antes de completar
         if ride.driver:
             self.stop_location_tracking(ride.driver)
+
+        # Limpiar datos de ETA para este viaje
+        if ride in self.ride_etas:
+            del self.ride_etas[ride]
 
         ride.status = "CompletadO"
         ride.driver.available = True
