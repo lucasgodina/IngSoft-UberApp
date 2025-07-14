@@ -7,13 +7,18 @@ def main():
     # Crear vista y controlador
     view = ConsoleView()
     controller = RideController(view)
-
+    
+    # 0. Mostrar mensaje de bienvenida
+    view.show_message("******Bienvenido a la App de Viajes 🚗******")
+    
     # 1. Pedir datos del pasajero
-    view.show_message("📥 Ingresá los datos del pasajero:")
+    view.show_message("------ Pantalla del Pasajero ------")
+    view.show_message("📥 Ingresá tus datos: ")
     
     # Pedir nombre del pasajero
     while True:
         name = view.get_passenger_name()
+        name = name.title() 
         if controller.is_valid_name(name):
             break
         view.show_message("❌ El nombre no puede estar vacío.")
@@ -41,13 +46,17 @@ def main():
     
     view.show_message("✅ Datos del pasajero válidos.")
     passenger = Passenger(name, dni, email, phone)
+    
+
 
     # 2. Pedir datos del chofer
-    view.show_message("🚗 Ingresá los datos del chofer:")
+    view.show_message("------ Pantalla del Chofer ------")
+    view.show_message("Ingresá tus datos: ")
     
     # Pedir nombre del chofer
     while True:
         name = view.get_driver_name()
+        name = name.title()  
         if controller.is_valid_name(name):
             break
         view.show_message("❌ El nombre no puede estar vacío.")
@@ -90,9 +99,11 @@ def main():
         if zone.strip():
             driver.set_work_zone(zone)
             break
-        view.show_message("❌ La zona de trabajo no puede estar vacía.")
+        else:
+            view.show_message("❌ La zona de trabajo no puede estar vacía.")
 
     # 4. Pedir origen y destino
+    view.show_message("------ Pantalla del Pasajero ------")
     view.show_message(f"Hola {passenger.name}, ¿desde dónde querés viajar?")
     while True:
         origin, destination = view.get_ride_data()
@@ -101,6 +112,7 @@ def main():
         view.show_message("❌ El origen y el destino no pueden estar vacíos.")
 
     # 5. Confirmar viaje
+    view.show_message("------ Pantalla del Chofer ------")
     while True:
         approved = input("¿Querés realizar el viaje? (s/n): ").lower()
         if approved in ['s', 'n']:
@@ -109,16 +121,31 @@ def main():
     
     if approved == 's':
         view.show_message("¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨")
-        
-        # 6. Crear, asignar y completar el viaje
+        # 4. Crear viaje, asignar chofer y completarlo
         ride = controller.request_ride(passenger, origin, destination)
+        view.show_message("------ Pantalla del Pasajero ------")
         controller.assign_driver(ride, driver)
-
+        view.show_message(f"El viaje ha sido asignado a {driver.name} con patente {driver.license_plate}.")
         input("Presioná enter para finalizar el viaje...")
+        view.show_message("------ Pantalla del Chofer ------")
         controller.complete_ride(ride)
-        view.show_message("✅ ¡Viaje completado exitosamente!")
+        # Calificar al chofer
+        view.show_message("------ Pantalla del Pasajero ------")
+        driver_rating = view.get_valid_driver_rating(driver.name)
+        driver.rate(driver_rating)
+        view.show_message("Gracias por calificar al chofer del viaje. ¡Hasta la próxima! 👋")
+        view.show_message("Se ha finalizado el viaje exitosamente. 🚗💨")
+        # Calificar al pasajero
+        view.show_message("------ Pantalla del Chofer ------")
+        passenger_rating = view.get_valid_passenger_rating(passenger.name)
+        passenger.rate(passenger_rating)
+        view.show_message("Gracias por calificar al pasajero del viaje. ¡Hasta la próxima! 👋")
+        view.show_message("Se ha finalizado el viaje exitosamente. 🚗💨")
     else:
-        view.show_message(f"Es una lástima que no puedas llevar a {passenger.name}. ¡Hasta luego! 👋")
-
+        # Si el chofer no puede llevar al pasajero
+        view.show_message(f"Es una lástima que no puedas llevar a {passenger.name}  ¡Hasta luego! 👋")
+        view.show_message("------ Pantalla del Pasajero ------")
+        view.show_message("No hay vehiculos disponibles.")
+        
 if __name__ == "__main__":
     main()

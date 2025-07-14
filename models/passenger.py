@@ -6,10 +6,8 @@ class Passenger(User):
         super().__init__(name, dni, email, number_phone)
         self.addresses = []
 
-    def rate(self):
-        # Lógica para calificar al pasajero
-        ratePassenger =input("Calificar al pasajero: ")
-        print(f"Calificación recibida: {ratePassenger}")
+    def rate(self, rating):
+        print(f"El pasajero {self.name} ha sido calificado con {rating} estrellas.")
 
     def add_address(self, address):
         self.addresses.append(address)

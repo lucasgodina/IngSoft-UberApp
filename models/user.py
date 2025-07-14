@@ -23,5 +23,5 @@ class User(ABC):
         return self._number_phone    
     
     @abstractmethod
-    def rate(self): # definido como abstracto.
+    def rate(self, rating):
         pass
