@@ -17,6 +17,7 @@ class RideController:
             ride.driver = driver
             ride.status = "En camino"
             driver.set_working_status(True)
+            driver.set_is_working(True)
             self.view.show_message(f"{driver.name} aceptó tu viaje.")
         else:
             self.view.show_message(f"{driver.name} no está disponible.")
@@ -24,6 +25,7 @@ class RideController:
     def complete_ride(self, ride):
         ride.status = "Completado"
         ride.driver.available = True
+        ride.driver.set_is_working(False)
         self.view.show_message(f"El viaje con {ride.passenger.name} se completó")
 
     # -------------------------------
@@ -68,4 +70,7 @@ class RideController:
         return "@" in email and "." in email and len(email) >= 5
 
     def is_valid_phone(self, phone):
-        return phone.isdigit() and len(phone) >= 10
+       return phone.isdigit() and len(phone) >= 10
+
+       
+    

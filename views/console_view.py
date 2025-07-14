@@ -21,19 +21,8 @@ class ConsoleView:
         phone = input("Teléfono: ")
         license_plate = input("Patente: ")
         return name, dni, email, phone, license_plate
+    
 
-    def pedir_kilometros(self):
-        while True:
-            try:
-                millage = float(input("Ingrese la cantidad de kilómetros recorridos: "))
-                if millage > 0:
-                    return millage
-                else:
-                    print("Por favor, ingrese un valor positivo.")
-            except ValueError:
-                print("Por favor, ingrese un número válido.")
-
-    # Métodos individuales que vinieron de main
     def get_passenger_name(self):
         return input("Nombre del pasajero: ")
 
@@ -60,3 +49,27 @@ class ConsoleView:
 
     def get_driver_license_plate(self):
         return input("Patente: ")
+    def pedir_kilometros(self):
+        return int(input("Ingrese la cantidad de kilómetros del viaje: "))
+    
+    def get_valid_driver_rating(self, driver_name):
+        while True:
+            try:
+                rating = int(input(f"¿Con cuántas estrellas calificás al chofer {driver_name}? (1-5): "))
+                if 1 <= rating <= 5:
+                    return rating
+                else:
+                    self.show_message("Por favor, ingresá un número entre 1 y 5.")
+            except ValueError:
+                self.show_message("Entrada inválida. Ingresá un número.")
+
+    def get_valid_passenger_rating(self, passenger_name):
+        while True:
+            try:
+                rating = int(input(f"¿Con cuántas estrellas calificás al pasajero {passenger_name}? (1-5): "))
+                if 1 <= rating <= 5:
+                    return rating
+                else:
+                    self.show_message("Por favor, ingresá un número entre 1 y 5.")
+            except ValueError:
+                self.show_message("Entrada inválida. Ingresá un número.")
