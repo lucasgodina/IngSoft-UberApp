@@ -20,8 +20,6 @@ class Driver(User):
     def is_working(self):
         return self._is_working
 
-    #  modificar estel estado si se encuentra trabajando o no,
-
     def set_working_status(self, status: bool):
         self._is_working = status
 
