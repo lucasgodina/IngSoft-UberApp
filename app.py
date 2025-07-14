@@ -153,6 +153,21 @@ def main():
         view.show_message("🏁 FIN DEL SEGUIMIENTO - LLEGASTE AL DESTINO")
         view.show_message("=" * 60)
 
+        # Demostrar el seguimiento de ubicación
+        view.show_message("\n" + "=" * 60)
+        view.show_message("🎯 DEMOSTRACIÓN DE SEGUIMIENTO DE UBICACIÓN")
+        view.show_message("=" * 60)
+
+        input("Presiona Enter para ver las actualizaciones de ubicación...")
+
+        # El seguimiento ya se inició automáticamente en assign_driver
+        # Ahora simulamos ver las actualizaciones
+        controller.simulate_location_updates(ride)
+
+        view.show_message("\n" + "=" * 60)
+        view.show_message("🏁 FIN DEL SEGUIMIENTO - LLEGASTE AL DESTINO")
+        view.show_message("=" * 60)
+
         input("Presioná enter para finalizar el viaje...")
         view.show_message("------ Pantalla del Chofer ------")
         controller.complete_ride(ride)

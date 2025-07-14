@@ -16,30 +16,18 @@ class Driver(User):
     def set_license_plate(self, value):
         self._license_plate = value
 
+    @property
+    def is_working(self):
+        return self._is_working
+
+    #  modificar estel estado si se encuentra trabajando o no,
+
     def set_working_status(self, status: bool):
         self._is_working = status
 
     def set_work_zone(self, zone: str):
         # defino la zona donde se encuentra trabajando
         print(f"Zona de trabajo establecida: {zone}")
-
-    @property
-    def is_working(self):
-        return self._is_working
-
-    def set_is_working(self, state: bool):
-        self._is_working = state
-
-    @property
-    def work_area(self):
-        return self._work_area
-
-    def set_work_area(self, area: str):
-        self._work_area = area
-
-    def rate(self, rating):
-        self.ratings.append(rating)
-        print(f"El chofer {self.name} ha sido calificado con {rating} estrellas.")
 
     def get_driver_id(self):
         """Retorna un ID único para el conductor"""
