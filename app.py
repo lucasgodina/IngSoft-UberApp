@@ -123,6 +123,13 @@ def main():
         view.show_message(
             "¡Gracias por tomar el viaje y llevar a nuestro pasajero! 🚗💨"
         )
+
+        # Calcular precio del viaje ANTES de asignar conductor
+        view.show_message("Vamos a calcular el precio del viaje...")
+        cantidad_millage = view.pedir_kilometros()
+        precio_viaje = controller.calcular_viaje(cantidad_millage)
+        view.show_message(f"💰 El precio del viaje es: ${precio_viaje}")
+
         # Crear viaje y asignar chofer
         ride = controller.request_ride(passenger, origin, destination)
         view.show_message("------ Pantalla del Pasajero ------")
@@ -130,28 +137,6 @@ def main():
         view.show_message(
             f"El viaje ha sido asignado a {driver.name} con patente {driver.license_plate}."
         )
-
-        # Calcular precio del viaje
-        view.show_message("Vamos a calcular el precio del viaje...")
-        cantidad_millage = view.pedir_kilometros()
-        precio_viaje = controller.calcular_viaje(cantidad_millage)
-        view.show_message(f"💰 El precio del viaje es: ${precio_viaje}")
-
-        # Finalizar viaje
-        # Demostrar el seguimiento de ubicación
-        view.show_message("\n" + "=" * 60)
-        view.show_message("🎯 DEMOSTRACIÓN DE SEGUIMIENTO DE UBICACIÓN")
-        view.show_message("=" * 60)
-
-        input("Presiona Enter para ver las actualizaciones de ubicación...")
-
-        # El seguimiento ya se inició automáticamente en assign_driver
-        # Ahora simulamos ver las actualizaciones
-        controller.simulate_location_updates(ride)
-
-        view.show_message("\n" + "=" * 60)
-        view.show_message("🏁 FIN DEL SEGUIMIENTO - LLEGASTE AL DESTINO")
-        view.show_message("=" * 60)
 
         # Demostrar el seguimiento de ubicación
         view.show_message("\n" + "=" * 60)

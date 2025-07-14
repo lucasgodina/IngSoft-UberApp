@@ -45,3 +45,8 @@ class Driver(User):
     def current_location(self):
         """Obtiene la ubicación actual del conductor"""
         return getattr(self, "_current_location", "Ubicación no disponible")
+
+    def rate(self, rating):
+        """Implementa el método abstracto rate de la clase User"""
+        self.ratings.append(rating)
+        print(f"El conductor {self.name} ha sido calificado con {rating} estrellas.")

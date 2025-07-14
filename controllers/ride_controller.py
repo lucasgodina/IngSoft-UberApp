@@ -24,7 +24,6 @@ class RideController:
             ride.driver = driver
             ride.status = "En camino"
             driver.set_working_status(True)
-            driver.set_is_working(True)
             self.view.show_message(f"{driver.name} aceptó tu viaje.")
 
             # Iniciar seguimiento de ubicación
@@ -138,7 +137,7 @@ class RideController:
 
         ride.status = "Completado"
         ride.driver.available = True
-        ride.driver.set_is_working(False)
+        ride.driver.set_working_status(False)
         self.view.show_message(f"El viaje con {ride.passenger.name} se completó")
 
     # -------------------------------
